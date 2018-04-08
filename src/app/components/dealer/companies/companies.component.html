@@ -1,0 +1,60 @@
+<div class="table-header">
+    <span class="header">Companies: </span>
+    <a (click)="create()" title="Create new company"><i class="material-icons">add_box</i></a>
+</div>
+<div *ngIf="rows.length > 0" class="table-container">
+    <table class="full-width">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Enable</th>
+                <th class="icon">&nbsp;</th>
+                <th class="icon">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of rows; let i=index">
+                <td class="number">{{ i + 1 }}</td>
+                <td><a (click)="edit(row)">{{ row.Name }}</a></td>
+                <td>{{ row.EnableStr }}</td>
+                <td class="icon"><a title="Delete" (click)="confirmDelete(row)"><i class="material-icons">delete</i></a></td>
+                <td class="icon"><a title="Go to Products" [routerLink]="'/dealer/products/' + row.Id"><i class="material-icons">present_to_all</i></a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div *ngIf="rows.length == 0">
+    <p class="h4">List company is empty</p>
+</div>
+
+<div class="modal fade" id="dealer-company" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title h5">{{ selected.Id > 0 ? 'Edit Company' : 'Create Company' }}</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" #formDealerCompany="ngForm">
+                    <div class="fieldgroup">
+                        <div [class]="selected.Name !== '' ? 'mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width is-dirty2' : 'mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width is-invalid'">
+                            <input class="mdl-textfield__input" type="text" id="dealer-companies--name" name="dealer-companies--name" [(ngModel)]="selected.Name" required>
+                            <label class="mdl-textfield__label" for="dealer-companies--name">Name</label>
+                        </div>
+                        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect check short" for="dealer-companies--enable" [class.is-checked]="selected.Enable">
+                            <input type="checkbox" id="dealer-companies--enable" name="dealer-companies--enable" class="mdl-switch__input" [(ngModel)]="selected.Enable">
+                            <span class="mdl-switch__label">Enable</span>
+                        </label>
+                    </div>               
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="mdl-button mdl-button--raised mdl-button-close" data-dismiss="modal">Cancel</button>
+                <button type="button" class="mdl-button mdl-button--raised mdl-button--colored" (click)="save()" [disabled]="!formDealerCompany.valid">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

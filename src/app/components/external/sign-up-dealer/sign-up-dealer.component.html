@@ -1,0 +1,25 @@
+<form #formSignUpDealer="ngForm">
+    <div *ngIf="!isSent" class="form-container">
+        <div>
+            <label>Login</label> <input type="text" class="form-control" id="sign-up-dealer-username" name="sign-up-dealer-username" [(ngModel)]="signUpDealer.UserName" required>
+        </div>
+        <div>
+            <label>Name</label> <input type="text" class="form-control" id="sign-up-dealer-name" name="sign-up-dealer-name" [(ngModel)]="signUpDealer.Name" required>
+        </div>
+        <div>
+            <label>Email</label> <input type="email" class="form-control" id="sign-up-dealer-email" name="sign-up-dealer-email" [(ngModel)]="signUpDealer.Email" required email>
+        </div>
+        <div>
+            <label>Firm Name</label> <input type="text" class="form-control" id="sign-up-dealer-dealer-name" name="sign-up-dealer-dealer-name" 
+                [(ngModel)]="signUpDealer.DealerName" required>
+        </div>
+        <div class="last">
+            <button class="btn btn-default" (click)="signUp()" [disabled]="!formSignUpDealer.valid">Sign Up</button>
+        </div>
+    </div>
+    <div *ngIf="isSent">
+        <div class="form-container alert alert-success">
+            <p>Request was sent. <a routerLink="/reset-password">Set password</a></p>
+        </div>
+    </div>
+</form>

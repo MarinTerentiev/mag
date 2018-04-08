@@ -1,0 +1,4 @@
+<div *ngIf="modalTempService.config && modalTempService.config.isShow" class="temp-popup {{ modalTempService.config.Type }}">
+    <p class="h4 label-info alert alert-{{ modalTempService.config.Type }}" [innerHTML]="modalTempService.config.Message"></p>
+</div>
+    

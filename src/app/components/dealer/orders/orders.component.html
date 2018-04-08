@@ -1,0 +1,89 @@
+<div class="table-header">
+    <span class="header">Orders: </span>
+</div>
+<div *ngIf="rows.length > 0" class="table-container">
+    <table class="full-width">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Login</th>
+                <th>Address</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of rows; let i=index">
+                <td class="number">{{ i + 1 }}</td>
+                <td><a (click)="edit(row)">{{ row.UserName }}</a></td>
+                <td>{{ row.Address }}</td>
+                <td>{{ row.Details }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div *ngIf="rows.length == 0">
+    <p class="h4">List order is empty</p>
+</div>
+
+    
+<div class="modal fade" id="dealer-order" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title h5">Order</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form">
+                    <div class="fieldgroup">
+                        <div class="one-row">
+                            <label>Login</label> <span>{{selected.UserName}}</span>
+                        </div>
+                        <div class="one-row">
+                            <label>Address</label> <span>{{selected.Address}}</span>
+                        </div>
+                        <div class="one-row">
+                            <label>Details</label> <span>{{selected.Details}}</span>
+                        </div>
+                    </div>
+                    <div class="fieldgroup">
+                        <div class="one-row">
+                            <div class="table-header">
+                                <span class="header">Products: </span>
+                            </div>
+                            <div *ngIf="rows.length > 0" class="table-container">
+                                <table class="full-width">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Count</th>
+                                            <th>Price</th>
+                                            <th>Amount</th>
+                                            <th>Company Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let row of selected.ProductCards; let i=index">
+                                            <td class="number">{{ i + 1 }}</td>
+                                            <td>{{ row.Name }}</td>
+                                            <td><span class="right">{{ row.Count }}</span></td>
+                                            <td><span class="right">{{ row.Price }}{{ getCurrency() }}</span></td>
+                                            <td><span class="right">{{ row.Count * row.Price }}{{ getCurrency() }}</span></td>
+                                            <td>{{ row.CompanyName }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="mdl-button mdl-button--raised mdl-button-close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

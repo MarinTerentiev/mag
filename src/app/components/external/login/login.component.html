@@ -1,0 +1,15 @@
+<form>
+    <div class="form-container">
+        <div>
+            <label>Login</label> <input type="text" class="form-control" id="username" [(ngModel)]="auth.UserName" name="username">
+        </div>
+        <div>
+            <label>Password</label> <input type="password" class="form-control" id="password" [(ngModel)]="auth.Password" name="password">
+        </div>
+        <div class="last">
+            <button class="btn btn-default" (click)="login()">Login</button>
+            <a class="btn right" routerLink="/sign-up">Don't have a account?</a>
+            <a class="btn right" routerLink="/reset-password">Forgot password?</a>
+        </div>
+    </div>
+</form>

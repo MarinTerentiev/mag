@@ -1,0 +1,22 @@
+<form *ngIf="!hasOrder" class="form" #formCustomerCheckout="ngForm">
+    <div class="fieldgroup">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width" [class.is-dirty2]="order.Address !== ''">
+            <input class="mdl-textfield__input" type="text" id="customer-checkout--address" name="customer-checkout--address" [(ngModel)]="order.Address" required>
+            <label class="mdl-textfield__label" for="customer-checkout--address">Address</label>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width" [class.is-dirty2]="order.Details !== ''">
+            <input class="mdl-textfield__input" type="text" id="customer-checkout--details" name="customer-checkout--details" [(ngModel)]="order.Details">
+            <label class="mdl-textfield__label" for="customer-checkout--address">Details</label>
+        </div>
+    </div>               
+    <div class="fieldgroup">
+        <div class="button-container">
+            <button class="mdl-button mdl-button--raised" routerLink="/customer/card">Cancel</button>
+            <button class="mdl-button mdl-button--raised mdl-button--colored" (click)="save()" [disabled]="!formCustomerCheckout.valid">Confirm</button>
+        </div>
+    </div>
+</form>
+<div *ngIf="hasOrder">
+    <p class="h4">Thanks for your order.</p>
+</div>
+

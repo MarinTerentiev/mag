@@ -1,0 +1,61 @@
+<div class="table-header">
+    <span class="header">Customer: </span>
+</div>
+<div *ngIf="rows.length > 0" class="table-container">
+    <table class="full-width">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Login</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th class="icon">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of rows; let i=index">
+                <td class="number">{{ i + 1 }}</td>
+                <td><a (click)="edit(row)">{{ row.UserName }}</a></td>
+                <td>{{ row.Name }}</td>
+                <td>{{ row.Email }}</td>
+                <td class="icon"><a title="Delete" (click)="confirmDelete(row)"><i class="material-icons">delete</i></a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div *ngIf="rows.length == 0">
+    <p class="h4">List customer is empty</p>
+</div>
+
+    
+<div class="modal fade" id="admin-customer" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title h5">Customer</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" #formAdminDealers="ngForm">
+                    <div class="fieldgroup">
+                        <div class="one-row">
+                            <label>Login</label> <span>{{selected.UserName}}</span>
+                        </div>
+                        <div class="one-row">
+                            <label>Name</label> <span>{{selected.Name}}</span>
+                        </div>
+                        <div class="one-row">
+                            <label>Email</label> <span>{{selected.Email}}</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="mdl-button mdl-button--raised mdl-button-close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+    

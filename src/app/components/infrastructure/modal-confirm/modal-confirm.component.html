@@ -1,0 +1,20 @@
+<div class="modal fade" id="modal-confirm" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" (click)="modalConfirmService.modalConfirmConfig.cancel()">&times;</button>
+                <h6 class="modal-title error">{{ modalConfirmService.modalConfirmConfig.Header }}</h6>
+            </div>
+            <div class="modal-body">
+                <span class="">{{ modalConfirmService.modalConfirmConfig.Message }}</span>
+            </div>
+            <div class="modal-footer">
+                <ng-content></ng-content>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button-close" data-dismiss="modal" 
+                    (click)="modalConfirmService.modalConfirmConfig.cancel()">Cancel</button>
+                <button class="mdl-button mdl-button--raised mdl-button--danger" data-dismiss="modal" 
+                    (click)="modalConfirmService.modalConfirmConfig.ok()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>

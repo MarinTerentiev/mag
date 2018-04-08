@@ -1,0 +1,15 @@
+<div class="fieldgroup">
+    <div class="product-box">
+        <div class="product-image" [ngStyle]="{'background-image': 'url(' + getPhoto() + ')'}">
+            
+        </div>
+        <div class="product-info">
+            <div class="product-name crop-text">Name: {{selected.Name}}</div>
+            <div class="product-price">Price: {{selected.Price}}$</div>
+            <div class="product-description crop-text">Description: {{selected.Description}}</div>
+            <div class="product-button">
+                <button class="mdl-button mdl-button--raised mdl-button--colored" (click)="add()">Add</button>
+            </div>
+        </div>
+    </div>
+</div>

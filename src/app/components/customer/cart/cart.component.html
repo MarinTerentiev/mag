@@ -1,0 +1,45 @@
+<div class="table-header">
+    <span class="header">Products: </span>
+</div>
+<div *ngIf="listProducts.length > 0" class="table-container">
+    <table class="full-width">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Count</th>
+                <th>Price</th>
+                <th>Amount</th>
+                <th class="icon">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of listProducts; let i=index">
+                <td class="number">{{ i + 1 }}</td>
+                <td>{{ product.Name }}</td>
+                <td>
+                    <span class="count">{{ product.Count }}</span>
+                    <a title="Delete" (click)="add(product)"><i class="material-icons">add</i></a>
+                    <a title="Delete" (click)="decrease(product)"><i class="material-icons">remove</i></a>
+                </td>
+                <td>{{ product.Price }}</td>
+                <td>{{ product.Count * product.Price }}{{ getCurrency() }}</td>
+                <td class="icon"><a title="Delete" (click)="confirmDelete(product)"><i class="material-icons">delete</i></a></td>
+            </tr>
+            <tr class="last">
+                <td></td>
+                <td>Total</td>
+                <td></td>
+                <td></td>
+                <td>{{ getTotal() }}{{ getCurrency() }}</td>
+                <td class="icon">&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="button-container">
+    <button class="mdl-button mdl-button--raised mdl-button--colored" routerLink="/customer/checkout">Confirm</button>
+</div>
+<div *ngIf="listProducts.length == 0">
+    <p class="h4">List product is empty</p>
+</div>

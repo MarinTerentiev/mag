@@ -1,0 +1,65 @@
+<div class="table-header">
+    <span class="header">Dealers: </span>
+    <!-- <a (click)="create()" title="Create new dealer"><i class="material-icons">add_box</i></a> -->
+</div>
+<div *ngIf="rows.length > 0" class="table-container">
+    <table class="full-width">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Enable</th>
+                <th>Amount</th>
+                <th class="icon">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of rows; let i=index">
+                <td class="number">{{ i + 1 }}</td>
+                <td><a (click)="edit(row)">{{ row.Name }}</a></td>
+                <td>{{ row.EnableStr }}</td>
+                <td>{{ row.Amount }}</td>
+                <td class="icon"><a title="Delete" (click)="confirmDelete(row)"><i class="material-icons">delete</i></a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div *ngIf="rows.length == 0">
+    <p class="h4">List dealer is empty</p>
+</div>
+
+    
+<div class="modal fade" id="admin-dealers" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title h5">{{ selected.Id > 0 ? 'Edit Dealer' : 'Create Dealer' }}</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" #formAdminDealers="ngForm">
+                    <div class="fieldgroup">
+                        <div *ngIf="selected.Id === -1" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width" [class.is-dirty2]="selected.Name !== ''">
+                            <input class="mdl-textfield__input" type="text" id="admin-dealers--name" name="admin-dealers--name" [(ngModel)]="selected.Name" required>
+                            <label class="mdl-textfield__label" for="admin-dealers--name">Name</label>
+                        </div>
+                        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect check short" for="admin-dealers--enable" [class.is-checked]="selected.Enable">
+                            <input type="checkbox" id="admin-dealers--enable" name="admin-dealers--enable" class="mdl-switch__input" [(ngModel)]="selected.Enable">
+                            <span class="mdl-switch__label">Enable</span>
+                        </label>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width" [class.is-dirty2]="selected.Amount !== null && selected.Amount !== ''">
+                            <input class="mdl-textfield__input" type="text" id="admin-dealers--amount" name="admin-dealers--amount" [(ngModel)]="selected.Amount">
+                            <label class="mdl-textfield__label" for="admin-dealers--amount">Amount</label>
+                        </div>
+                    </div>               
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="mdl-button mdl-button--raised mdl-button-close" data-dismiss="modal">Cancel</button>
+                <button type="button" class="mdl-button mdl-button--raised mdl-button--colored" (click)="save()" [disabled]="!formAdminDealers.valid">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col col-lg-3">
+    <form class="form">
+      <div class="fieldgroup">
+        <p class="h4">Search Options:</p>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
+          <select class="mdl-textfield__input" id="catalog--dealerId" name="catalog--dealerId" [(ngModel)]="searchProduct.DealerId" (change)="selectDealer()">
+            <option value="-1">All</option>
+            <option *ngFor="let dealer of dealers" [value]="dealer.Id">{{ dealer.Name }}</option>
+          </select>
+          <label class="mdl-textfield__label">Dealer</label>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width is-dirty2" *ngIf="searchProduct.DealerId !== -1">
+          <select class="mdl-textfield__input" id="catalog--companyId" name="catalog--companyId" [(ngModel)]="searchProduct.CompanyId" (change)="selectCompany()">
+            <option value="-1">All</option>
+            <option *ngFor="let company of companiesForDealer" [value]="company.Id">{{ company.Name }}</option>
+          </select>
+          <label class="mdl-textfield__label">Company</label>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width is-dirty2" *ngIf="searchProduct.CompanyId !== -1">
+            <select class="mdl-textfield__input" id="catalog--categoryId" name="catalog--categoryId" [(ngModel)]="searchProduct.CategoryId" (change)="selectCategory()">
+              <option value="-1">All</option>
+              <option *ngFor="let category of categoriesForCompany" [value]="category.Id">{{ category.Name }}</option>
+            </select>
+            <label class="mdl-textfield__label">Category</label>
+          </div>
+      </div>
+      <div class="full-width">
+        <button class="mdl-button mdl-button--raised mdl-button--colored" (click)="search()">Search</button>
+      </div>
+    </form>
+  </div>
+  <div class="col col-lg-9 product-container">
+    <div class="fieldgroup">
+      <p class="h4 product-title">Products:</p>
+    </div>
+    <div class="fieldgroup full-width">
+      <div *ngFor="let product of productCatalog" class="product-box">
+        <div class="product-image" [ngStyle]="{'background-image': 'url(' + getPhoto(product) + ')'}">
+           
+        </div>
+        <div class="product-info">
+            <div class="product-name crop-text"><a [routerLink]="'/customer/product/' + product.Id">Name: {{product.Name}}</a></div>
+            <div class="product-price">Price: {{product.Price}}{{getCurrency()}}</div>
+            <div class="product-description crop-text">Description: {{product.Description}}</div>
+            <div class="product-button">
+              <button class="mdl-button mdl-button--raised mdl-button--colored" (click)="add(product)">Add</button>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="fieldgroup full-width product-pagination"> 
+      <a *ngFor="let page of pageNumbers" (click)="searchByPage(page)">{{page}}</a>
+    </div>
+  </div>
+</div>

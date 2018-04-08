@@ -1,0 +1,138 @@
+<div class="table-header">
+    <span class="header">Products of {{ company.Name }}: </span>
+    <a (click)="create()" title="Create new products"><i class="material-icons">add_box</i></a>
+    <a title="Category management" data-toggle="modal" data-target="#dealer-category"><i class="material-icons">reorder</i></a>
+</div>
+<div *ngIf="rows.length > 0" class="table-container">
+    <table class="full-width">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Enable</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th class="icon">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of rows; let i=index">
+                <td class="number">{{ i + 1 }}</td>
+                <td><a (click)="edit(row)">{{ row.Name }}</a></td>
+                <td>{{ row.Description }}</td>
+                <td>{{ row.EnableStr }}</td>
+                <td>{{ row.Price }}</td>
+                <td>{{ row.CategoryName }}</td>
+                <td class="icon"><a title="Delete" (click)="confirmDelete(row)"><i class="material-icons">delete</i></a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div *ngIf="rows.length == 0">
+    <p class="h4">List product is empty</p>
+</div>
+
+<div class="modal fade" id="dealer-product" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title h5">{{ selected.Id > 0 ? 'Edit Company' : 'Create Company' }}</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" #formDealerProducts="ngForm">
+                    <div class="fieldgroup">
+                        <div [class]="selected.Name !== '' ? 'mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width is-dirty2' : 'mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width is-invalid'">
+                            <input class="mdl-textfield__input" type="text" id="dealer-products--name" name="dealer-products--name" [(ngModel)]="selected.Name" required>
+                            <label class="mdl-textfield__label" for="dealer-products--name">Name</label>
+                        </div>
+                        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect check short" for="dealer-products--enable" [class.is-checked]="selected.Enable">
+                            <input type="checkbox" id="dealer-products--enable" name="dealer-products--enable" class="mdl-switch__input" [(ngModel)]="selected.Enable">
+                            <span class="mdl-switch__label">Enable</span>
+                        </label>
+                        <div [class]="selected.Description !== '' ? 'mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width is-dirty2' : 'mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width is-invalid'">
+                            <input class="mdl-textfield__input" type="text" id="dealer-products--description" name="dealer-products--description" 
+                                [(ngModel)]="selected.Description" required>
+                            <label class="mdl-textfield__label" for="dealer-products--description">Description</label>
+                        </div>
+                        <div [class]="selected.Price !== null ? 'mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width is-dirty2' : 'mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width is-invalid'">
+                            <input class="mdl-textfield__input" type="text" id="dealer-products--price" name="dealer-products--price" [(ngModel)]="selected.Price" required>
+                            <label class="mdl-textfield__label" for="dealer-products--price">Price</label>
+                        </div>
+                        <div [class]="selected.CategoryId !== null ? 'mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width is-dirty2' : 'mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width is-invalid'">
+                            <select class="mdl-textfield__input" id="dealer-products--type" name="dealer-products--type" [(ngModel)]="selected.CategoryId" required>
+                                <option *ngFor="let cat of categories" [value]="cat.Id">{{ cat.Name }}</option>
+                            </select>
+                            <label class="mdl-textfield__label">Category</label>
+                        </div>
+                        <div class="full-width">
+                            <img *ngIf="selected.PhotoPath && selected.PhotoPath !== ''" class="product-image" [src]="selected.PhotoPath" />
+                            <input #productPhoto type='file' (change)="loadImg($event)" style="display:none;" id="productPhoto">
+                            <button class="mdl-button mdl-js-button mdl-button--raised product-image-button" (click)="triggerFalseClick()">
+                                Update Photo
+                            </button>
+                        </div>
+                    </div>               
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="mdl-button mdl-button--raised mdl-button-close" data-dismiss="modal">Cancel</button>
+                <button type="button" class="mdl-button mdl-button--raised mdl-button--colored" (click)="save()" [disabled]="!formDealerProducts.valid">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="dealer-category" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title h5">Category Management</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" #formDealerCompany="ngForm">
+                    <div class="fieldgroup">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" [class.is-dirty2]="category.Name !== ''">
+                            <input class="mdl-textfield__input" type="text" id="dealer-product-category--name" name="dealer-product-category--name" 
+                                [(ngModel)]="category.Name" required>
+                            <label class="mdl-textfield__label" for="dealer-product-category--name">Name</label>
+                        </div>
+                        <button type="button" class="mdl-button mdl-button--raised mdl-button--colored" (click)="createCategory()" 
+                            [disabled]="!formDealerCompany.valid">Create</button>
+                    </div>  
+                    <div class="fieldgroup table-container">
+                        <table class="full-width" *ngIf="categories.length > 0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th class="icon">&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let cat of categories; let i=index">
+                                    <td class="number">{{ i + 1 }}</td>
+                                    <!-- <td><a (click)="edit(row)">{{ cat.Name }}</a></td> -->
+                                    <td>{{ cat.Name }}</td>
+                                    <td class="icon"><a title="Delete" (click)="confirmDeleteCategory(cat)"><i class="material-icons">delete</i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div *ngIf="categories.length == 0">
+                            <p class="h4">List category is empty</p>
+                        </div>
+                    </div>          
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="mdl-button mdl-button--raised mdl-button-close" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

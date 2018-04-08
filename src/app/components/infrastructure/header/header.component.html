@@ -1,0 +1,60 @@
+<header class="mdc-toolbar container">
+    <nav class="navbar navbar-default" *ngIf="IsExternalMode">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" routerLink="/home">Mag</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a class="mdl-navigation__link" routerLink="/sign-up-dealer"><span class="glyphicon glyphicon-user"></span> Sign Up For Dealer</a></li>
+                <li><a class="mdl-navigation__link" routerLink="/sign-up" ><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a class="mdl-navigation__link" routerLink="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
+        </div>
+    </nav>
+    <nav class="navbar navbar-default" *ngIf="IsAdminMode">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" routerLink="/admin/dealers">Mag</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li [class.active]="IsAdminDealerActive"><a routerLink="/admin/dealers">Dealers</a></li>
+                <li [class.active]="IsAdminCustomerActive"><a routerLink="/admin/customers">Customers</a></li>
+                <li [class.active]="IsAdminOrderActive"><a routerLink="/admin/orders">Orders</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a class="name"><span>{{ authService.getName() }}</span></a></li>
+                <li><a class="mdl-navigation__link" (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    <nav class="navbar navbar-default" *ngIf="IsDealerMode">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" routerLink="/dealer/companies">Mag</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li [class.active]="IsDealerCompanyActive"><a routerLink="/dealer/companies">Company</a></li>
+                <li [class.active]="IsDealerOrderActive"><a routerLink="/dealer/orders">Orders</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a class="name"><span>{{ authService.getName() }}</span></a></li>
+                <li><a class="mdl-navigation__link" (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    <nav class="navbar navbar-default" *ngIf="IsCustomerMode">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" routerLink="/customer/catalog">Mag</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li [class.active]="IsCustomerCatalogActive"><a routerLink="/customer/catalog">Catalog</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a class="name"><span>{{ authService.getName() }}</span></a></li>
+                <li><a class="mdl-navigation__link" routerLink="/customer/cart"><span class="glyphicon glyphicon-shopping-cart"></span> Card: {{ getTotal() }}$</a></li>
+                <li><a class="mdl-navigation__link" (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
